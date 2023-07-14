@@ -31,13 +31,12 @@ const navList: Variants = {
       bounce: 0,
       duration: 0.5,
       delayChildren: 0.2,
-      staggerChildren: 0.5,
+      staggerChildren: 2.5,
     },
   },
 };
 
 const Nav = ({onTabClick}:NavProps) => {
-  // const [selectedItem, setSelectedItem] = useState<number | null>(1);
 
   const items = [
     { id: 1, name: "HOME" },
@@ -46,9 +45,6 @@ const Nav = ({onTabClick}:NavProps) => {
     { id: 4, name: "ABOUT" },
   ];
 
-  // const handleSelect = (id: number | null) => {
-  //   setSelectedItem(id);
-  // };
 
   return (
     <motion.nav
@@ -57,12 +53,23 @@ const Nav = ({onTabClick}:NavProps) => {
       transition={{
         ease: "linear",
         duration: 2,
-        staggerChildren: 0.5,
+
       }}
     >
-      <motion.ul variants={navList} initial="hidden" animate="visible">
-        {items.map((item) => (
-          <motion.li key={item.id} onClick={() => onTabClick(item.name)}>
+      <motion.ul >
+        {items.map((item, index) => (
+            <motion.li
+            key={item.id}
+            onClick={() => onTabClick(item.name)}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 17,
+              delay: 0.1 + index * 0.2,
+            }}
+          >
             <motion.div
               variants={navItems}
               whileHover="whileHover"

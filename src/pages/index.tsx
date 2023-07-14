@@ -5,18 +5,15 @@ import Mono from "../../components/Mono";
 import Rgb from "../../components/Rgb";
 import About from "../../components/About";
 
-
-
-
 export default function Home() {
-  const [selectedItem, setSelectedItem] = useState("Hero");
+  const [selectedItem, setSelectedItem] = useState("HOME");
   
   const handleSelect = (name: string) => {
     setSelectedItem(name);
   };
  
   let content;
-  if (selectedItem === "Hero") {
+  if (selectedItem === "HOME") {
     content = <Hero />;
   } else if (selectedItem === "MONO") {
     content = <Mono />;
@@ -26,7 +23,7 @@ export default function Home() {
     content = <About />;
   }
 
-console.log(selectedItem)
+
 
   return (
     <main className="flex flex-row min-h-screen items-center justify-between p-24">

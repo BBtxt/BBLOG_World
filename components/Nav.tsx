@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { Variants, motion } from "framer-motion";
 import Image from "next/image";
 
+type NavProps = { 
+  // selectedItem: number;
+  onTabClick: (id:string) => void;
+};
+
 
 const navItems: Variants = {
   whileHover: { scale: 1.2 },
@@ -31,19 +36,19 @@ const navList: Variants = {
   },
 };
 
-const Nav = () => {
-  const [selectedItem, setSelectedItem] = useState<number | null>(null);
+const Nav = ({onTabClick}:NavProps) => {
+  // const [selectedItem, setSelectedItem] = useState<number | null>(1);
 
   const items = [
-    { id: 1, name: "Home" },
+    { id: 1, name: "HOME" },
     { id: 2, name: "RGB" },
     { id: 3, name: "MONO" },
     { id: 4, name: "ABOUT" },
   ];
 
-  const handleSelect = (id: number | null) => {
-    setSelectedItem(id);
-  };
+  // const handleSelect = (id: number | null) => {
+  //   setSelectedItem(id);
+  // };
 
   return (
     <motion.nav
@@ -57,7 +62,7 @@ const Nav = () => {
     >
       <motion.ul variants={navList} initial="hidden" animate="visible">
         {items.map((item) => (
-          <motion.li key={item.id} onClick={() => handleSelect(item.id)}>
+          <motion.li key={item.id} onClick={() => onTabClick(item.name)}>
             <motion.div
               variants={navItems}
               whileHover="whileHover"

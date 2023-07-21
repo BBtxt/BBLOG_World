@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { Variants, motion } from "framer-motion";
 import Image from "next/image";
-
-type NavProps = { 
-  // selectedItem: number;
-  onTabClick: (id:string) => void;
-};
+import Link from "next/link";
 
 
 const navItems: Variants = {
@@ -36,13 +32,13 @@ const navList: Variants = {
   },
 };
 
-const Nav = ({onTabClick}:NavProps) => {
+const Nav = () => {
 
   const items = [
-    { id: 1, name: "HOME" },
-    { id: 2, name: "RGB" },
-    { id: 3, name: "MONO" },
-    { id: 4, name: "ABOUT" },
+    { id: 1, name: "HOME", path: "/" },
+    { id: 2, name: "RGB", path: "/rgb" },
+    { id: 3, name: "MONO", path: "/mono" },
+    { id: 4, name: "ABOUT", path: "/about" },
   ];
 
 
@@ -60,7 +56,6 @@ const Nav = ({onTabClick}:NavProps) => {
         {items.map((item, index) => (
             <motion.li
             key={item.id}
-            onClick={() => onTabClick(item.name)}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -70,16 +65,20 @@ const Nav = ({onTabClick}:NavProps) => {
               delay: 0.1 + index * 0.2,
             }}
           >
-            <motion.div
-              variants={navItems}
-              whileHover="whileHover"
-              whileTap="whileTap"
-              className="flex flex-row gap-6"
-            >
-              <Image src='/assets/dot.svg' alt="dot" width={20} height={20} 
-              className="ml-3 bg-red-500"/>
-              <motion.p>{item.name}</motion.p>
-            </motion.div>
+            <Link
+            href={item.path}>
+              <motion.div
+                variants={navItems}
+                whileHover="whileHover"
+                whileTap="whileTap"
+                className="flex flex-row gap-6"
+              >
+                <Image src='/assets/dot.svg' alt="dot" width={20} height={20}
+                className="ml-3 bg-red-500"/>
+                <motion.p>{item.name}</motion.p>
+              </motion.div>
+              
+            </Link>
           </motion.li>
         ))}
       </motion.ul>

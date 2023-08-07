@@ -71,10 +71,10 @@ const Nav = () => {
                 variants={navItems}
                 whileHover="whileHover"
                 whileTap="whileTap"
-                className="flex flex-row gap-6"
+                className="flex flex-row gap-1"
               >
                 <Image src='/assets/dot.svg' alt="dot" width={20} height={20}
-                className="ml-3 bg-red-500"/>
+                className=" "/>
                 <motion.p>{item.name}</motion.p>
               </motion.div>
               

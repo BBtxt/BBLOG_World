@@ -1,13 +1,12 @@
-import Layout from "@/components/layout";
+import GlobeCanvas from "@/components/GlobeCanvas";
 
 
-export default function Home() {
-
+const Home:React.FC = () => {
   return (
-<div>
-  
-      testshit
-  
+<div className="h-screen flex flex-col items-center justify-center">
+    <GlobeCanvas />
 </div>
   );
 }
+
+export default Home;

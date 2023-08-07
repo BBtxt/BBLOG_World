@@ -29,17 +29,17 @@ const About = () => {
         className="w-1/2 text-center py-4"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.5 }}
+        viewport={{ once: true, amount: 0.7 }}
         transition={{ duration: 0.5 }}
         variants={{
-          hidden: { opacity: 0, y: -100 },
-          visible: { opacity: 1, y: 0 },
+          hidden: { opacity: 0, x: -100 },
+          visible: { opacity: 1, x: 0 },
         }}
       >
-        <p>Hi I'm Brandon</p>
+        <p>Hi I&apos;m Brandon</p>
         <p>
-          I'm a photographer and engineer. I try to capture beauty in the
-          mundane. If you'd like to see what else I'm up too check out my
+          I&apos;m a photographer and engineer. I try to capture beauty in the
+          mundane. If you&apos;d like to see what else I&apos;m up too check out my
           socials below.{" "}
         </p>
       </motion.div>
@@ -48,9 +48,9 @@ const About = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.6 }}
         variants={{
-          hidden: { opacity: 0, y: -100 },
+          hidden: { opacity: 0, y: 100 },
           visible: { opacity: 1, y: 0 },
         }}
       >

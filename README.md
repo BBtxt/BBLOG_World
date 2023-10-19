@@ -1,2 +1,2 @@
 # Hey 
-This is my super sick website prject or whatever!
+This is my super sick website project or whatever!

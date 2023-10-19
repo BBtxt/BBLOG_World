@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 interface ImageModalProps {
   imageUrl: string;
@@ -16,11 +17,13 @@ const ImageModal: React.FC<ImageModalProps> = ({ imageUrl, onClose }) => {
       className="fixed top-0 left-0 w-full h-full flex flex-col z-20 items-center justify-center bg-black/90 bg-opacity-75"
       onClick={onClose}
     >
-      <motion.img
+      <Image
         src={imageUrl}
         alt="Picture"
         className="h-4/5 w-4/5 object-contain"
         onClick={(e) => e.stopPropagation()}
+        width={500}
+        height={500}
         
       />
       <button 

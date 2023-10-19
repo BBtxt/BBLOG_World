@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ImageModal from "@/components/imageModal";
+import Image from "next/image";
 
 const Rgb = () => {
   const totalImages = 8;
@@ -33,19 +34,14 @@ const Rgb = () => {
     <div className="flex flex-col items-center justify-center h-screen">
         <AnimatePresence initial={false}>
       <div className="flex justify-center items-center">
-          <motion.img
+      <Image
             key={selectedItem}
             src={imageSrc}
-            alt="Color Picture"
+            alt="Monochrome Picture"
             className="object-contain w-1/3 lg:w-1/2 cursor-pointer"
             onClick={handleImageClick}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{
-              type: "tween",
-              duration: 0.2,
-            }}
+            width={500}
+            height={500}
           />
       </div>
         </AnimatePresence>

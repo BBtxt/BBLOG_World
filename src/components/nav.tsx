@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Variants, motion } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
 
+import Link from "next/link";
 
 const navItems: Variants = {
   whileHover: { scale: 1.2 },
@@ -33,14 +32,12 @@ const navList: Variants = {
 };
 
 const Nav = () => {
-
   const items = [
     { id: 1, name: "HOME", path: "/" },
     { id: 2, name: "RGB", path: "/rgb" },
     { id: 3, name: "MONO", path: "/mono" },
     { id: 4, name: "ABOUT", path: "/about" },
   ];
-
 
   return (
     <motion.nav
@@ -49,12 +46,11 @@ const Nav = () => {
       transition={{
         ease: "linear",
         duration: 2,
-
       }}
     >
-      <motion.ul >
+      <motion.ul>
         {items.map((item, index) => (
-            <motion.li
+          <motion.li
             key={item.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -65,19 +61,15 @@ const Nav = () => {
               delay: 0.1 + index * 0.2,
             }}
           >
-            <Link
-            href={item.path}>
+            <Link href={item.path}>
               <motion.div
                 variants={navItems}
                 whileHover="whileHover"
                 whileTap="whileTap"
-                className="flex flex-row gap-1"
+                className="flex gap-6 font-extrabold text-2xl "
               >
-                <Image src='/assets/dot.svg' alt="dot" width={20} height={20}
-                className=" "/>
                 <motion.p>{item.name}</motion.p>
               </motion.div>
-              
             </Link>
           </motion.li>
         ))}

@@ -7,9 +7,9 @@ const Globe: React.FC = () => {
   useFrame(({ clock }) => {
     globeRef.current.rotation.y += 0.001;
   });
-  
+
   return (
-    <Sphere args={[1, 24, 24]} ref={globeRef}>
+    <Sphere args={[1, 30, 30]} ref={globeRef}>
       <meshBasicMaterial color="white" wireframe />
     </Sphere>
   );

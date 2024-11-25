@@ -1,4 +1,4 @@
-import SocialMediaIcons from "@/components/SocialMediaIcons";
+import SocialMediaIcons from "./components/SocialMediaIcons";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import React from "react";
@@ -39,8 +39,8 @@ const About = () => {
         <p>Hi I&apos;m Brandon</p>
         <p>
           I&apos;m a photographer and engineer. I try to capture beauty in the
-          mundane. If you&apos;d like to see what else I&apos;m up too check out my
-          socials below.{" "}
+          mundane. If you&apos;d like to see what else I&apos;m up too check out
+          my socials below.{" "}
         </p>
       </motion.div>
       <motion.div

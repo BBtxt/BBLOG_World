@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -9,7 +10,6 @@ interface ImageModalProps {
 
 const ImageModal: React.FC<ImageModalProps> = ({ imageUrl, onClose }) => {
   return (
-    
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -24,11 +24,10 @@ const ImageModal: React.FC<ImageModalProps> = ({ imageUrl, onClose }) => {
         onClick={(e) => e.stopPropagation()}
         width={500}
         height={500}
-        
       />
-      <button 
-      className="mt-2"
-      onClick={onClose}>Close</button>
+      <button className="mt-2" onClick={onClose}>
+        Close
+      </button>
     </motion.div>
   );
 };

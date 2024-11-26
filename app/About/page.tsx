@@ -1,4 +1,4 @@
-import SocialMediaIcons from "./components/SocialMediaIcons";
+import SocialMediaIcons from "@/components/SocialMediaIcons.tsx";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import React from "react";

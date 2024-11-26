@@ -1,7 +1,7 @@
 // app/layout.tsx
 import "./globals.css";
 import "@fontsource/ibm-plex-mono";
-import Layout from "./components/layout"; // importing your component layout
+import Layout from "./components/layout";
 
 export const metadata = {
   title: "BBLOG WORLD WIDE",

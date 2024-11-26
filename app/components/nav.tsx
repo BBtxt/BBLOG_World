@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { Variants, motion } from "framer-motion";
 
@@ -31,6 +32,7 @@ const navList: Variants = {
   },
 };
 
+// app/components/nav.tsx
 const Nav = () => {
   const items = [
     { id: 1, name: "HOME", path: "/" },
@@ -43,12 +45,10 @@ const Nav = () => {
     <motion.nav
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{
-        ease: "linear",
-        duration: 2,
-      }}
+      transition={{ ease: "linear", duration: 2 }}
+      className="flex justify-center w-full md:w-auto"
     >
-      <motion.ul>
+      <motion.ul className="flex flex-row md:flex-col gap-6">
         {items.map((item, index) => (
           <motion.li
             key={item.id}
@@ -66,9 +66,9 @@ const Nav = () => {
                 variants={navItems}
                 whileHover="whileHover"
                 whileTap="whileTap"
-                className="flex gap-6 font-extrabold text-2xl "
+                className="font-extrabold text-sm md:text-2xl"
               >
-                <motion.p>{item.name}</motion.p>
+                {item.name}
               </motion.div>
             </Link>
           </motion.li>
@@ -77,5 +77,4 @@ const Nav = () => {
     </motion.nav>
   );
 };
-
 export default Nav;

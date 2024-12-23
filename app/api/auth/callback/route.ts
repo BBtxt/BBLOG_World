@@ -1,10 +1,15 @@
-// app/api/auth/callback/route.ts
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
+  const state = searchParams.get("state");
+
+  const storedState = cookies().get("oauth_state")?.value;
+  if (!state || state !== storedState) {
+    return NextResponse.redirect("/error");
+  }
 
   if (!code) {
     return NextResponse.redirect("/error");
@@ -20,28 +25,31 @@ export async function GET(request: Request) {
         },
         body: new URLSearchParams({
           grant_type: "authorization_code",
-          client_id: process.env.ADOBE_CLIENT_ID!,
-          client_secret: process.env.CLIENT_SECRET!,
+          client_id: process.env.ADOBE_API_KEY!,
+          client_secret: process.env.ADOBE_CLIENT_SECRET!,
           code: code,
-          redirect_uri: process.env.DEF_REDIRECT_URI!,
+          redirect_uri: process.env.ADOBE_REDIRECT_URI!,
         }),
-      },
+      }
     );
+
+    // if (!tokenResponse.ok) {
+    //   throw new Error('Failed to get access token')
+    // }
 
     const data = await tokenResponse.json();
 
-    // Store the token in a secure cookie
     const cookieStore = cookies();
-    cookieStore.set("adobe_access_token", data.access_token, {
+    cookieStore.set("access_token", data.access_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 60 * 60 * 24, // 24 hours
+      maxAge: 60 * 60 * 24,
     });
 
-    return NextResponse.redirect("/");
+    return NextResponse.redirect("/")
   } catch (error) {
     console.error("Token exchange error:", error);
-    return NextResponse.redirect("/error");
+  return NextResponse.redirect("/error")
   }
 }

@@ -1,8 +1,9 @@
 // app/page.tsx
 import Globe from "./components/Globe";
-import { Key } from "react";
 import { getAccessToken } from "../utils/auth";
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
+import { Key } from "react";
 
 async function getLightroomPhotos() {
   // First check for API key
@@ -101,7 +102,7 @@ async function getLightroomPhotos() {
     // Check for missing access token (fixed spelling)
     if (error.message === "No access token found") {
       console.log('initiating login flow...')
-      redirect("/api/auth/login"); // Removed 'app' from path
+      // redirect("/api/auth/login"); // Removed 'app' from path
       return null;
       // console.log("No access token found, redirecting to login...")
     
@@ -111,13 +112,20 @@ async function getLightroomPhotos() {
 }
 
 export default async function Home() {
-  console.log('hit')
+
+  const headersList = headers()
+  const referer = headersList.get('referer')
+
+  console.log('Redering Home page')
+  console.log('Previous page:', referer)
+
   try {
     const photoData = await getLightroomPhotos();
 
     if(!photoData) {
       console.log('No Photo data available - redirecting to login')
-      redirect('/api/auth/login')
+      const loginUrl = new URL('/api/auth/login', 'http://localhost:3000');
+      return redirect(loginUrl.toString());
     }
     return (
       <div className="min-h-screen w-full flex flex-col items-center justify-center bg-black">

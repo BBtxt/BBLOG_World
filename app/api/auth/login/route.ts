@@ -1,40 +1,49 @@
 // app/api/auth/login/route.ts
-import { NextResponse } from "next/server";
+// This file initiates the OAuth flow by redirecting to Adobe's login page
+import { NextResponse } from 'next/server';
 
-export async function GET() {
-    // Add console logging to help us debug
-    console.log("Starting OAuth login process");
+export async function GET(request: Request) {
+    console.log('=== LOGIN ROUTE START ===');
 
+    // Verify environment variables
     if (!process.env.ADOBE_API_KEY || !process.env.ADOBE_REDIRECT_URI) {
-        console.error("Missing required environment variables", {
+        console.error("Missing environment variables:", {
             hasApiKey: !!process.env.ADOBE_API_KEY,
-            hasRedirecURI: !!process.env.ADOBE_REDIRECT_URI,
+            hasRedirectUri: !!process.env.ADOBE_REDIRECT_URI
         });
-        return NextResponse.redirect("/error");
+        return NextResponse.redirect('/error');
     }
 
+    // Generate state for CSRF protection
     const state = Math.random().toString(36).substring(7);
     console.log("Generated state:", state);
 
+    // Build Adobe's authorization URL
     const authUrl = new URL('https://ims-na1.adobelogin.com/ims/authorize/v2');
     
+    // Add all required parameters
     authUrl.searchParams.append('client_id', process.env.ADOBE_API_KEY);
     authUrl.searchParams.append('redirect_uri', process.env.ADOBE_REDIRECT_URI);
-    // Add all required scopes for Lightroom API
     authUrl.searchParams.append('scope', 'lr_partner_apis,openid');
     authUrl.searchParams.append('response_type', 'code');
     authUrl.searchParams.append('state', state);
 
-    console.log("Authorization URL:", authUrl.toString());
+    console.log("Built authorization URL:", 
+        authUrl.toString().replace(process.env.ADOBE_API_KEY, '[HIDDEN]')
+    );
 
-    // Adjust cookie settings based on environment
-    const cookieOptions = process.env.NODE_ENV === 'development' 
-        ? 'Path=/; HttpOnly; SameSite=Lax'
-        : 'Path=/; HttpOnly; Secure; SameSite=Lax';
-
-    return NextResponse.redirect(authUrl.toString(), {
-        headers: {
-            'Set-Cookie': `oauth_state=${state}; ${cookieOptions}`
-        }
+    // Create response with cookie
+    const response = NextResponse.redirect(authUrl);
+    
+    // Set state cookie for verification
+    response.cookies.set('oauth_state', state, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        path: '/',
+        maxAge: 3600
     });
+
+    console.log('=== LOGIN ROUTE END ===');
+    return response;
 }

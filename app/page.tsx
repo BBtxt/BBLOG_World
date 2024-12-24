@@ -6,6 +6,11 @@ import { redirect } from "next/navigation";
 
 async function getLightroomPhotos() {
   // First check for API key
+
+  console.log('==========================================');
+  console.log('STARTING GET LIGHTROOM PHOTOS');
+  console.log('==========================================');
+
   if (!process.env.ADOBE_API_KEY) {
     throw new Error("Missing Adobe API credentials");
   }
@@ -95,17 +100,25 @@ async function getLightroomPhotos() {
 
     // Check for missing access token (fixed spelling)
     if (error.message === "No access token found") {
-      console.log("No access token found, redirecting to login...")
+      console.log('initiating login flow...')
       redirect("/api/auth/login"); // Removed 'app' from path
+      return null;
+      // console.log("No access token found, redirecting to login...")
+    
     }
     throw error;
   }
 }
 
 export default async function Home() {
+  console.log('hit')
   try {
     const photoData = await getLightroomPhotos();
 
+    if(!photoData) {
+      console.log('No Photo data available - redirecting to login')
+      redirect('/api/auth/login')
+    }
     return (
       <div className="min-h-screen w-full flex flex-col items-center justify-center bg-black">
         <Globe />
@@ -124,6 +137,7 @@ export default async function Home() {
               </div>
             )
           )}
+          {console.log("butt")}
         </div>
       </div>
     );

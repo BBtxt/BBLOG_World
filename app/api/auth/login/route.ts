@@ -1,27 +1,40 @@
-import { redirect } from 'next/navigation'
+// app/api/auth/login/route.ts
+import { NextResponse } from "next/server";
 
 export async function GET() {
-  // Verify all required environment variables exist
-  if (!process.env.ADOBE_API_KEY) {
-    throw new Error('ADOBE_API_KEY environment variable is not defined')
-  }
-  if (!process.env.ADOBE_REDIRECT_URI) {
-    throw new Error('ADOBE_REDIRECT_URI environment variable is not defined')
-  }
+    // Add console logging to help us debug
+    console.log("Starting OAuth login process");
 
-  const state = Math.random().toString(36).substring(7)
-  const authUrl = new URL('https://ims-na1.adobelogin.com/ims/authorize/v2')
-  
-  // Now TypeScript knows these values exist
-  authUrl.searchParams.append('client_id', process.env.ADOBE_API_KEY)
-  authUrl.searchParams.append('redirect_uri', process.env.ADOBE_REDIRECT_URI)
-  authUrl.searchParams.append('scope', 'lr_partner_apis')
-  authUrl.searchParams.append('response_type', 'code')
-  authUrl.searchParams.append('state', state)
+    if (!process.env.ADOBE_API_KEY || !process.env.ADOBE_REDIRECT_URI) {
+        console.error("Missing required environment variables", {
+            hasApiKey: !!process.env.ADOBE_API_KEY,
+            hasRedirecURI: !!process.env.ADOBE_REDIRECT_URI,
+        });
+        return NextResponse.redirect("/error");
+    }
 
-  const response = Response.redirect(authUrl.toString())
-  
-  response.headers.append('Set-Cookie', `oauth_state=${state}; Path=/; HttpOnly; Secure`)
-  
-  return response
+    const state = Math.random().toString(36).substring(7);
+    console.log("Generated state:", state);
+
+    const authUrl = new URL('https://ims-na1.adobelogin.com/ims/authorize/v2');
+    
+    authUrl.searchParams.append('client_id', process.env.ADOBE_API_KEY);
+    authUrl.searchParams.append('redirect_uri', process.env.ADOBE_REDIRECT_URI);
+    // Add all required scopes for Lightroom API
+    authUrl.searchParams.append('scope', 'lr_partner_apis,openid');
+    authUrl.searchParams.append('response_type', 'code');
+    authUrl.searchParams.append('state', state);
+
+    console.log("Authorization URL:", authUrl.toString());
+
+    // Adjust cookie settings based on environment
+    const cookieOptions = process.env.NODE_ENV === 'development' 
+        ? 'Path=/; HttpOnly; SameSite=Lax'
+        : 'Path=/; HttpOnly; Secure; SameSite=Lax';
+
+    return NextResponse.redirect(authUrl.toString(), {
+        headers: {
+            'Set-Cookie': `oauth_state=${state}; ${cookieOptions}`
+        }
+    });
 }

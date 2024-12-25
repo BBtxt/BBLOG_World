@@ -38,7 +38,7 @@
     "**/*.tsx",
     "src/components/Hero.jsx",
     ".next/types/**/*.ts"
-  ],
+, "scripts/setup-token.js"  ],
   "exclude": [
     "node_modules"
   ]

@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node server.js",
+    "dev": "next dev",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.0.8",
     "@react-three/drei": "^9.80.1",
     "@react-three/fiber": "^8.13.6",
+    "@supabase/supabase-js": "^2.43.4",
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
@@ -21,6 +22,7 @@
     "eslint-config-next": "13.4.9",
     "framer-motion": "^10.12.20",
     "next": "^14.2.3",
+    "next-cloudinary": "^6.16.0",
     "postcss": "^8.4.38",
     "react": "18.2.0",
     "react-dom": "18.2.0",

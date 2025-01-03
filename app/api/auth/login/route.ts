@@ -1,16 +1,18 @@
 // app/api/auth/login/route.ts
-// This file initiates the OAuth flow by redirecting to Adobe's login page
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
     console.log('=== LOGIN ROUTE START ===');
 
-    // Verify environment variables
+    // Verify environment variables with detailed logging
+    console.log('Environment variables check:', {
+        hasApiKey: !!process.env.ADOBE_API_KEY,
+        hasRedirectUri: !!process.env.ADOBE_REDIRECT_URI,
+        redirectUri: process.env.ADOBE_REDIRECT_URI // Log the actual URI for debugging
+    });
+
     if (!process.env.ADOBE_API_KEY || !process.env.ADOBE_REDIRECT_URI) {
-        console.error("Missing environment variables:", {
-            hasApiKey: !!process.env.ADOBE_API_KEY,
-            hasRedirectUri: !!process.env.ADOBE_REDIRECT_URI
-        });
+        console.error("Missing environment variables");
         return NextResponse.redirect('/error');
     }
 
@@ -21,14 +23,31 @@ export async function GET(request: Request) {
     // Build Adobe's authorization URL
     const authUrl = new URL('https://ims-na1.adobelogin.com/ims/authorize/v2');
     
-    // Add all required parameters
-    authUrl.searchParams.append('client_id', process.env.ADOBE_API_KEY);
-    authUrl.searchParams.append('redirect_uri', process.env.ADOBE_REDIRECT_URI);
-    authUrl.searchParams.append('scope', 'lr_partner_apis,openid');
-    authUrl.searchParams.append('response_type', 'code');
-    authUrl.searchParams.append('state', state);
+    // Ensure redirect URI is properly formatted
+    const redirectUri = process.env.ADOBE_REDIRECT_URI.replace(/([^:])(\/\/+)/g, '$1/');
+    
+    // Create parameters object for better visibility
+    const params = {
+        client_id: process.env.ADOBE_API_KEY,
+        redirect_uri: redirectUri,
+        scope: 'lr_partner_apis,openid',
+        response_type: 'code',
+        state: state
+    };
 
-    console.log("Built authorization URL:", 
+    // Log the parameters we're about to use (excluding sensitive data)
+    console.log('Authorization parameters:', {
+        ...params,
+        client_id: '[HIDDEN]',
+        redirect_uri: redirectUri
+    });
+
+    // Add parameters to URL
+    Object.entries(params).forEach(([key, value]) => {
+        authUrl.searchParams.append(key, value);
+    });
+
+    console.log('Final authorization URL:', 
         authUrl.toString().replace(process.env.ADOBE_API_KEY, '[HIDDEN]')
     );
 
@@ -38,7 +57,7 @@ export async function GET(request: Request) {
     // Set state cookie for verification
     response.cookies.set('oauth_state', state, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: true,  // Always use secure in development for Adobe OAuth
         sameSite: 'lax',
         path: '/',
         maxAge: 3600

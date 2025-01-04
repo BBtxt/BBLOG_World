@@ -35,9 +35,7 @@ const navList: Variants = {
 // app/components/nav.tsx
 const Nav = () => {
   const items = [
-    { id: 1, name: "HOME", path: "/" },
-    { id: 2, name: "RGB", path: "/rgb" },
-    { id: 3, name: "MONO", path: "/mono" },
+    
     { id: 4, name: "ABOUT", path: "/about" },
   ];
 

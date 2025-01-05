@@ -1,4 +1,4 @@
-import SocialMediaIcons from "@/components/SocialMediaIcons.tsx";
+;
 import { motion } from "framer-motion";
 import Image from "next/image";
 import React from "react";
@@ -54,8 +54,7 @@ const About = () => {
           visible: { opacity: 1, y: 0 },
         }}
       >
-        {" "}
-        <SocialMediaIcons />{" "}
+
       </motion.div>
     </div>
   );

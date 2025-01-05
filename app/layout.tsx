@@ -1,7 +1,6 @@
 // app/layout.tsx
 import "./globals.css";
 import "@fontsource/ibm-plex-mono";
-import Layout from "./components/layout";
 
 export const metadata = {
   title: "BBLOG WORLD WIDE",
@@ -15,9 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <Layout>{children}</Layout>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

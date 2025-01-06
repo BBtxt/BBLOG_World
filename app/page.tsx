@@ -1,46 +1,56 @@
-'use client';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
+"use client";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import Globe from "./components/Globe";
 
 export default function EnterPage() {
   const router = useRouter();
   const [isAnimating, setIsAnimating] = useState(false);
+  const videoUrl = "https://res.cloudinary.com/daa405978/video/upload/q_auto,f_auto,c_fill/hero/001";
 
   const handleEnter = () => {
     setIsAnimating(true);
+    // Wait for animation to complete before navigation
+    const animationDuration = 500; // Match this with your animation duration
     setTimeout(() => {
-      router.push('/main');
-    }, 500);
+      router.prefetch("/main"); // Prefetch the next page
+      router.push("/main");
+    }, animationDuration);
   };
 
   return (
-    // Changed background to white and removed the layout component for the enter page
-    <div className={`min-h-screen flex flex-col items-center justify-center bg-white text-black
-      ${isAnimating ? 'animate-fade-out' : 'animate-fade-in'}`}>
+    <div className={`min-h-screen flex flex-col items-center justify-center
+      ${isAnimating ? "animate-fade-out" : "animate-fade-in"}`}>
       
-      {/* Logo Container - Responsive sizing */}
-      <div className="w-[200px] md:w-[400px] aspect-[4/3] relative mb-8 bg-[#90EBA3] rounded-lg">
-        {/* Circle element */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
-                      w-[120px] h-[120px] md:w-[240px] md:h-[240px] 
-                      border-2 border-black rounded-full" />
-        
-        {/* Text below circle */}
-        <p className="absolute bottom-4 left-1/2 transform -translate-x-1/2 
-                     text-sm md:text-base font-medium">
-          bblog world
-        </p>
+      <div className="relative w-[92%] sm:w-[85%] md:w-[80%] aspect-video">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover"
+        >
+          <source src={videoUrl} type="video/mp4" />
+        </video>
+
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <Globe />
+          <div className="text-white text-lg md:text-3xl lg:text-4xl font-bold mt-2 sm:mt-4">
+            BBLOG WORLD
+          </div>
+        </div>
       </div>
 
-      {/* Enter button - styled as a minimal rectangle */}
-      <button
-        onClick={handleEnter}
-        className="w-[80px] h-[24px] md:w-[100px] md:h-[30px] 
-                 border border-black hover:bg-black hover:text-white 
-                 transition-colors duration-300"
-        aria-label="Enter site"
-      />
+      <div className="mt-4 sm:mt-6 md:mt-8">
+        <Button
+          variant="outline"
+          onClick={handleEnter}
+          // className="px-8 md:px-12 py-2 sm:py-3 md:py-4 text-base sm:text-lg md:text-xl lg:text-2xl"
+        >
+          Enter
+        </Button>
+      </div>
     </div>
   );
 }

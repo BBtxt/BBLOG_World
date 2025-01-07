@@ -1,78 +1,85 @@
-"use client";
-import React, { useState } from "react";
-import { Variants, motion } from "framer-motion";
-
+// Nav.tsx
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import { Menu } from "lucide-react";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 
-const navItems: Variants = {
-  whileHover: { scale: 1.2 },
-  whileTap: { scale: 0.9 },
-  default: {
-    scale: 1,
-    transition: {
-      type: "spring",
-      stiffness: 400,
-      damping: 17,
-    },
-  },
-};
-
-const navList: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.5,
-      delayChildren: 0.2,
-      staggerChildren: 2.5,
-    },
-  },
-};
-
-// app/components/nav.tsx
 const Nav = () => {
-  const items = [
-    
-    { id: 4, name: "ABOUT", path: "/about" },
-  ];
+  const NavContent = () => (
+    <div>
+      <div className="space-y-1">
+        <h1 className="text-4xl font-medium leading-none">BBlog world</h1>
+        <p className="text-sm text-muted-foreground">
+          Photographic Works
+        </p>
+      </div>
+      <Separator className="my-4" />
+      <div className="flex md:h-5 items-center md:space-x-4 text-sm md:flex-row flex-col space-y-4 md:space-y-0">
+        <Button variant="link" className="w-full md:w-auto justify-start">
+          <Link href="/SelectedWorks">Selected Works</Link>
+        </Button>
+        <Separator orientation="vertical" className="hidden md:block" />
+        <Separator className="md:hidden" />
+
+        <Button variant="link" className="w-full md:w-auto justify-start">
+          <Link href="/about">About</Link>
+        </Button>
+        <Separator orientation="vertical" className="hidden md:block" />
+        <Separator className="md:hidden" />
+        
+        <Button variant="link" className="w-full md:w-auto justify-start">
+          <Link href="/Social">Socials</Link>
+        </Button>
+      </div>
+    </div>
+  );
 
   return (
-    <motion.nav
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ ease: "linear", duration: 2 }}
-      className="flex justify-center w-full md:w-auto"
-    >
-      <motion.ul className="flex flex-row md:flex-col gap-6">
-        {items.map((item, index) => (
-          <motion.li
-            key={item.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 17,
-              delay: 0.1 + index * 0.2,
-            }}
-          >
-            <Link href={item.path}>
-              <motion.div
-                variants={navItems}
-                whileHover="whileHover"
-                whileTap="whileTap"
-                className="font-extrabold text-sm md:text-2xl"
-              >
-                {item.name}
-              </motion.div>
-            </Link>
-          </motion.li>
-        ))}
-      </motion.ul>
-    </motion.nav>
+    <>
+      {/* Mobile Navigation */}
+      <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+        <Drawer>
+          <DrawerTrigger asChild>
+            <Button
+              size="lg"
+              variant="outline"
+              className=" w-12 h-12 "
+            >
+              Menu
+            </Button>
+          </DrawerTrigger>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>Menu</DrawerTitle>
+            </DrawerHeader>
+            <div className="p-4">
+              <NavContent />
+            </div>
+            <div className="p-4">
+              <DrawerClose asChild>
+                <Button variant="outline" className="w-full">
+                  Close
+                </Button>
+              </DrawerClose>
+            </div>
+          </DrawerContent>
+        </Drawer>
+      </div>
+
+      {/* Desktop Navigation */}
+      <div className="hidden md:block">
+        <NavContent />
+      </div>
+    </>
   );
 };
+
 export default Nav;

@@ -1,6 +1,6 @@
 "use client";
 import React, { ReactNode } from "react";
-import Nav from "./nav";
+import Nav from "./Nav";
 
 type LayoutProps = {
   children: ReactNode;
@@ -8,15 +8,15 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="min-h-screen flex flex-col md:flex-row justify-center ">
-      {/* Navigation - top on mobile, left on desktop */}
-      <section className="w-full md:w-1/4 h-20 md:h-screen flex items-center justify-center md:justify-end ">
+    <div className="min-h-screen flex flex-col md:flex-row">
+      {/* Navigation - floating button on mobile, left on desktop */}
+      <section className="md:w-1/4 md:h-screen md:p-8">
         <Nav />
       </section>
 
-      {/* Content - below nav on mobile, right side on desktop */}
-      <section className="w-full md:w-3/4 h-[calc(100vh-5rem)] md:h-screen flex items-center justify-center ">
-        <main className="w-2/3">{children}</main>
+      {/* Content - full screen on mobile, right side on desktop */}
+      <section className="w-full md:w-3/4 min-h-screen md:h-screen flex items-center justify-center p-4">
+        <main className="w-full md:w-2/3">{children}</main>
       </section>
     </div>
   );

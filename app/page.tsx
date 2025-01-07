@@ -7,7 +7,8 @@ import Globe from "./components/Globe";
 export default function EnterPage() {
   const router = useRouter();
   const [isAnimating, setIsAnimating] = useState(false);
-  const videoUrl = "https://res.cloudinary.com/daa405978/video/upload/q_auto,f_auto,c_fill/hero/001";
+  const videoUrl =
+    "https://res.cloudinary.com/daa405978/video/upload/q_auto,f_auto,c_fill/hero/001";
 
   const handleEnter = () => {
     setIsAnimating(true);
@@ -20,36 +21,39 @@ export default function EnterPage() {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col items-center justify-center
-      ${isAnimating ? "animate-fade-out" : "animate-fade-in"}`}>
-      
-      <div className="relative w-[92%] sm:w-[85%] md:w-[80%] aspect-video">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover"
-        >
-          <source src={videoUrl} type="video/mp4" />
-        </video>
+    <div
+      className={`
+      ${isAnimating ? "animate-fade-out" : "animate-fade-in"}`}
+    >
+      <div className="min-h-screen flex flex-col items-center justify-center px-4 container">
+        <div className="relative max-w-screen-lg w-[100%] sm:w-[85%] md:w-[80%] aspect-video">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source
+              src={videoUrl}
+              type="video/mp4"
+            />
+          </video>
 
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <Globe />
-          <div className="text-white text-lg md:text-3xl lg:text-4xl font-bold mt-2 sm:mt-4">
-            BBLOG WORLD
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <Globe />
+              <p className="text-muted break-all">BBLOG WORLD</p>
           </div>
         </div>
-      </div>
 
-      <div className="mt-4 sm:mt-6 md:mt-8">
-        <Button
-          variant="outline"
-          onClick={handleEnter}
-          // className="px-8 md:px-12 py-2 sm:py-3 md:py-4 text-base sm:text-lg md:text-xl lg:text-2xl"
-        >
-          Enter
-        </Button>
+        <div className="mt-4 sm:mt-6 md:mt-8">
+          <Button
+            variant="outline"
+            onClick={handleEnter}
+          >
+            Enter
+          </Button>
+        </div>
       </div>
     </div>
   );

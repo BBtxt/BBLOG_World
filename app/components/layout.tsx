@@ -8,17 +8,16 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
-      {/* Navigation - floating button on mobile, left on desktop */}
-      <section className="md:w-1/4 md:h-screen md:p-8">
-        <Nav />
-      </section>
-
-      {/* Content - full screen on mobile, right side on desktop */}
-      <section className="w-full md:w-3/4 min-h-screen md:h-screen flex items-center justify-center p-4">
-        <main className="w-full md:w-2/3">{children}</main>
-      </section>
+    <div className="min-h-screen flex flex-col">
+    {/* Apply margins here to the container */}
+    <div className="mt-6 mx-4 md:mx-8">
+      <Nav />
     </div>
+
+    <div className="p-2">
+      {children}
+    </div>
+  </div>
   );
 };
 

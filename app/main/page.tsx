@@ -1,12 +1,12 @@
 // app/main/page.tsx
 import Layout from "../components/layout";
+import PhotoCarousel from "../components/PhotoCarousel";
 
 export default function MainPage() {
   return (
     <Layout>
-      <div className="w-full">
-        {/* Your main content here */}
-        <h1>Welcome to the Main Site</h1>
+      <div className="w-full p-36">
+        <PhotoCarousel />
       </div>
     </Layout>
   );

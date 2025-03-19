@@ -14,30 +14,26 @@ import {
 
 const Nav = () => {
   const NavContent = () => (
-    <div>
+    <div className="mt-6 mx-8 w-1/4">
       <div className="space-y-1">
-        <h1 className="text-4xl font-medium leading-none">BBlog world</h1>
+        <h1 className="text-3xl font-medium leading-none">BBlog world</h1>
         <p className="text-sm text-muted-foreground">
           Photographic Works
         </p>
       </div>
-      <Separator className="my-4" />
+      <Separator className="my-3" />
       <div className="flex md:h-5 items-center md:space-x-4 text-sm md:flex-row flex-col space-y-4 md:space-y-0">
         <Button variant="link" className="w-full md:w-auto justify-start">
           <Link href="/SelectedWorks">Selected Works</Link>
         </Button>
+        
         <Separator orientation="vertical" className="hidden md:block" />
         <Separator className="md:hidden" />
 
         <Button variant="link" className="w-full md:w-auto justify-start">
-          <Link href="/about">About</Link>
+          <Link href="/About">About</Link>
         </Button>
-        <Separator orientation="vertical" className="hidden md:block" />
-        <Separator className="md:hidden" />
         
-        <Button variant="link" className="w-full md:w-auto justify-start">
-          <Link href="/Social">Socials</Link>
-        </Button>
       </div>
     </div>
   );

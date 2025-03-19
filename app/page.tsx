@@ -22,37 +22,48 @@ export default function EnterPage() {
 
   return (
     <div
-      className={`
+      className={`min-h-screen w-full flex items-center justify-center
       ${isAnimating ? "animate-fade-out" : "animate-fade-in"}`}
     >
-      <div className="min-h-screen flex flex-col items-center justify-center px-4 container">
-        <div className="relative max-w-screen-lg w-[100%] sm:w-[85%] md:w-[80%] aspect-video">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover"
-          >
-            <source
-              src={videoUrl}
-              type="video/mp4"
-            />
-          </video>
+      {/* Center container with fixed width */}
+      <div className="w-full max-w-4xl mx-auto flex flex-col items-center justify-center">
+        {/* Main content container - space between keeps the content and button apart */}
+        <div className="w-full flex flex-col items-center justify-between gap-8">
+          {/* Video and Globe container with positioned text at the bottom */}
+          <div className="relative w-full aspect-video">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+            >
+              <source
+                src={videoUrl}
+                type="video/mp4"
+              />
+            </video>
 
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <Globe />
-              <p className="text-muted break-all">BBLOG WORLD</p>
+            {/* Globe centered in video */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Globe />
+            </div>
+            
+            {/* Text positioned at the bottom of the video container */}
+            <div className="absolute bottom-0 left-0 right-0 text-center">
+              <p className="text-muted">BBLOG WORLD</p>
+            </div>
           </div>
-        </div>
 
-        <div className="mt-4 sm:mt-6 md:mt-8">
-          <Button
-            variant="outline"
-            onClick={handleEnter}
-          >
-            Enter
-          </Button>
+          {/* Button with clear vertical separation */}
+          <div>
+            <Button
+              variant="outline"
+              onClick={handleEnter}
+            >
+              Enter
+            </Button>
+          </div>
         </div>
       </div>
     </div>

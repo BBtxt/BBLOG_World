@@ -7,7 +7,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Card, CardContent } from "@/components/ui/card";
 import { CldImage } from 'next-cloudinary';
 
 const PhotoCarousel = () => {
@@ -30,7 +29,7 @@ const PhotoCarousel = () => {
     >
       <CarouselContent className="md:flex-row flex-col">
         {randomPhotos.map((photoNum) => (
-          <CarouselItem key={photoNum} className="basis-full">
+          <CarouselItem key={photoNum as React.Key} className="basis-full">
             <div className="p-1">
 
                 {/* Container with fixed aspect ratio */}
